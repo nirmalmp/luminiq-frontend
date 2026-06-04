@@ -5,7 +5,7 @@ const nextConfig = {
   output: 'export',
   trailingSlash: true,
   basePath: isProd ? '/luminiq-frontend' : '',
-  assetPrefix: isProd ? '/luminiq-frontend/' : '',
+  assetPrefix: isProd ? '/luminiq-frontend' : '',
   images: {
     unoptimized: true,
   },
