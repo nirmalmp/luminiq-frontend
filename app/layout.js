@@ -1,39 +1,66 @@
-import { Inter, Playfair_Display } from 'next/font/google';
-import styles from './layout.module.css';
+import { Inter, Playfair_Display, Allura } from 'next/font/google';
 import './globals.css';
 
 const inter = Inter({
-  subsets: ["latin"],
+  subsets: ['latin'],
   variable: '--font-inter',
-  weight: ['400', '500', '600']
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
 });
 
 const playfair = Playfair_Display({
-  subsets: ["latin"],
+  subsets: ['latin'],
   variable: '--font-playfair',
-  weight: ['400', '500', '600', '700']
+  weight: ['500', '600', '700'],
+  display: 'swap',
 });
 
+const allura = Allura({
+  subsets: ['latin'],
+  variable: '--font-script',
+  weight: '400',
+  display: 'swap',
+});
+
+const SITE_TITLE = 'Luminiq Media — Real Estate Photography & Videography | GTA';
+const SITE_DESC =
+  'Cinematic real estate photography and video for the Greater Toronto Area. Property tours, HDR photography, aerial drone, and 3D virtual tours that help listings sell faster.';
+
 export const metadata = {
-  title: 'Luminiq',
-  description: 'Luminiq',
-  icons: {
-    icon: { url: '/favicon.svg', type: 'image/svg+xml' },
-  }
+  title: SITE_TITLE,
+  description: SITE_DESC,
+  keywords: [
+    'real estate videography',
+    'real estate photography',
+    'property video tour',
+    'drone real estate',
+    'Toronto real estate media',
+    'GTA listing photography',
+  ],
+  openGraph: {
+    title: SITE_TITLE,
+    description: SITE_DESC,
+    siteName: 'Luminiq Media',
+    type: 'website',
+    locale: 'en_CA',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE_TITLE,
+    description: SITE_DESC,
+  },
 };
 
 export const viewport = {
-  themeColor: '#09090B',
+  themeColor: '#0A1428',
   width: 'device-width',
-  initialScale: 1
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.variable} ${playfair.variable} ${styles.body}`}>
-        {children}
-      </body>
+    <html lang="en" className={`${inter.variable} ${playfair.variable} ${allura.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }

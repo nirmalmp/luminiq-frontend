@@ -1,0 +1,43 @@
+import Logo from '../Logo/Logo';
+import styles from './Footer.module.css';
+
+const LINKS = [
+  { label: 'Services', href: '#services' },
+  { label: 'Work', href: '#work' },
+  { label: 'Why Us', href: '#why' },
+  { label: 'Contact', href: '#contact' },
+];
+
+export default function Footer() {
+  return (
+    <footer className={styles.footer}>
+      <div className={`container ${styles.inner}`}>
+        <div className={styles.brand}>
+          <Logo />
+          <p className={styles.tagline}>Real estate photography &amp; videography for the Greater Toronto Area.</p>
+        </div>
+
+        <nav className={styles.links}>
+          {LINKS.map((l) => (
+            <a key={l.href} href={l.href}>
+              {l.label}
+            </a>
+          ))}
+        </nav>
+
+        <div className={styles.contact}>
+          <a href="tel:+16477749219">+1 647-774-9219</a>
+          <a href="mailto:info@luminiqmedia.com">info@luminiqmedia.com</a>
+          <a href="https://instagram.com/luminiqmedia" target="_blank" rel="noopener noreferrer">
+            @luminiqmedia
+          </a>
+        </div>
+      </div>
+
+      <div className={`container ${styles.bottom}`}>
+        <span>© 2026 Luminiq Media. All rights reserved.</span>
+        <span>Toronto · GTA</span>
+      </div>
+    </footer>
+  );
+}

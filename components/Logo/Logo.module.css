@@ -1,0 +1,35 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--gold-light);
+}
+
+.mark {
+  height: 46px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.words {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.script {
+  font-family: var(--font-script);
+  font-size: 1.85rem;
+  color: var(--gold-light);
+  line-height: 0.9;
+}
+
+.media {
+  font-family: var(--font-sans);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--text);
+  padding-left: 3px;
+}

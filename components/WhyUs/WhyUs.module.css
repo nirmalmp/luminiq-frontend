@@ -1,0 +1,98 @@
+.wrap {
+  background: linear-gradient(180deg, var(--navy-900), var(--navy-850));
+  border-block: 1px solid var(--line-soft);
+}
+
+.head {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 32px;
+  align-items: end;
+  margin-bottom: 52px;
+}
+
+.lead {
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.points {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.point {
+  padding: 26px 22px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line-soft);
+  background: var(--navy-800);
+}
+
+.num {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--gold-light);
+  display: block;
+  margin-bottom: 14px;
+}
+
+.pointTitle {
+  font-size: 1.12rem;
+  margin-bottom: 8px;
+}
+
+.pointDesc {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.stats {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 34px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--navy-700), var(--navy-800));
+  border: 1px solid var(--line);
+}
+
+.stat {
+  text-align: center;
+}
+
+.statValue {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: var(--gold-light);
+  line-height: 1;
+}
+
+.statLabel {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  .head {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .points {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .points,
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
