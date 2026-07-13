@@ -1,5 +1,6 @@
 import Header from '@/components/Header/Header';
 import Hero from '@/components/Hero/Hero';
+import TrustedBy from '@/components/TrustedBy/TrustedBy';
 import Services from '@/components/Services/Services';
 import Portfolio from '@/components/Portfolio/Portfolio';
 import WhyUs from '@/components/WhyUs/WhyUs';
@@ -13,6 +14,7 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
+        <TrustedBy />
         <Services />
         <Portfolio />
         <WhyUs />

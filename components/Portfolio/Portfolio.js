@@ -13,12 +13,9 @@ export default function Portfolio() {
   return (
     <section className="section" id="work">
       <div className="container">
-        <span className="eyebrow">Selected Work</span>
+        <span className="eyebrow">Portfolio</span>
         <h2 className="sectionTitle">A look at recent listings</h2>
-        <p className="sectionLead">
-          A snapshot of the homes we&apos;ve brought to life. Replace these placeholders with your own footage and photos
-          anytime.
-        </p>
+        <p className="sectionLead">A snapshot of the homes we&apos;ve brought to life.</p>
 
         {/* Featured video — drop a YouTube/Vimeo iframe into the slot below */}
         <div className={styles.feature}>

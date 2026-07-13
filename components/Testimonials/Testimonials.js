@@ -25,7 +25,7 @@ export default function Testimonials() {
   return (
     <section className="section">
       <div className="container">
-        <span className="eyebrow">Kind Words</span>
+        <span className="eyebrow">Reviews</span>
         <h2 className="sectionTitle">Trusted by GTA agents</h2>
 
         <div className={styles.grid}>

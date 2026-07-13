@@ -2,8 +2,8 @@ import styles from './WhyUs.module.css';
 
 const POINTS = [
   {
-    title: 'Next-day delivery',
-    desc: 'Shoot today, list tomorrow. Edited photos and video back in your inbox within 24 hours.',
+    title: '24-Hour Turnaround',
+    desc: 'Shoot today, list tomorrow. Edited photos and videos back in your inbox within 24 hours.',
   },
   {
     title: 'MLS-ready files',

@@ -14,7 +14,7 @@ export default function Footer() {
       <div className={`container ${styles.inner}`}>
         <div className={styles.brand}>
           <Logo />
-          <p className={styles.tagline}>Real estate photography &amp; videography for the Greater Toronto Area.</p>
+          <p className={styles.tagline}>Real estate photography &amp; videography.</p>
         </div>
 
         <nav className={styles.links}>
@@ -36,7 +36,7 @@ export default function Footer() {
 
       <div className={`container ${styles.bottom}`}>
         <span>© 2026 Luminiq Media. All rights reserved.</span>
-        <span>Toronto · GTA</span>
+        <span>Toronto</span>
       </div>
     </footer>
   );

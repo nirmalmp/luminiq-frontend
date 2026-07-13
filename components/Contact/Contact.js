@@ -39,7 +39,7 @@ export default function Contact() {
       <div className={`container ${styles.grid}`}>
         <div className={styles.info}>
           <span className="eyebrow">Get In Touch</span>
-          <h2 className="sectionTitle">Let&apos;s make your listing unforgettable</h2>
+          <h2 className="sectionTitle">Let us help you sell your listing</h2>
           <p className={styles.lead}>
             Tell us about the property and what you need. We&apos;ll reply within 24 hours with availability and a quote.
           </p>
@@ -67,7 +67,7 @@ export default function Contact() {
             ))}
           </ul>
 
-          <p className={styles.area}>Serving Toronto &amp; the Greater Toronto Area</p>
+          <p className={styles.area}>Serving Greater Toronto Area and beyond</p>
         </div>
 
         <div className={styles.formWrap}>

@@ -2,16 +2,6 @@ import styles from './Services.module.css';
 
 const SERVICES = [
   {
-    title: 'Cinematic Property Tours',
-    desc: 'Smooth, story-driven walkthrough videos that make buyers feel the flow of every room.',
-    icon: (
-      <>
-        <path d="M3 7a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-        <path d="M16 10l5-3v10l-5-3" />
-      </>
-    ),
-  },
-  {
     title: 'Real Estate Photography',
     desc: 'Bright, true-to-life HDR stills, professionally edited and MLS-ready overnight.',
     icon: (
@@ -22,7 +12,17 @@ const SERVICES = [
     ),
   },
   {
-    title: 'Aerial & Drone',
+    title: 'Cinematic Property Tours',
+    desc: 'Smooth, story-driven walkthrough videos that make buyers feel the flow of every room.',
+    icon: (
+      <>
+        <path d="M3 7a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <path d="M16 10l5-3v10l-5-3" />
+      </>
+    ),
+  },
+  {
+    title: 'Drone',
     desc: 'Licensed drone pilots capturing sweeping exteriors, lot lines, and neighbourhood context.',
     icon: (
       <>
@@ -35,7 +35,7 @@ const SERVICES = [
     ),
   },
   {
-    title: '3D & Virtual Tours',
+    title: 'Virtual Tours',
     desc: 'Immersive dollhouse and walkthrough tours so buyers can explore anytime, anywhere.',
     icon: (
       <>
@@ -45,7 +45,7 @@ const SERVICES = [
     ),
   },
   {
-    title: 'Social Reels',
+    title: 'Social Media Reels',
     desc: 'Vertical, fast-cut edits built for Instagram and TikTok to maximise listing reach.',
     icon: (
       <>

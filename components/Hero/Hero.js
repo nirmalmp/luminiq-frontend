@@ -16,13 +16,14 @@ export default function Hero() {
       </div>
 
       <div className={`container ${styles.inner}`}>
-        <span className="eyebrow">Photography · Videography · Aerial</span>
+        <span className="eyebrow">Photography · Videography</span>
         <h1 className={styles.title}>
           Cinematic real estate media that <span className={styles.accent}>sells the space</span>
         </h1>
         <p className={styles.lead}>
-          Luminiq Media crafts scroll-stopping property tours, magazine-grade photography, and aerial footage that help
-          listings stand out and close faster across the Greater Toronto Area.
+          From first frame to final cut, Luminiq Media turns listings into stories buyers stop for — cinematic property
+          tours and magazine-grade photography, delivered fast enough to keep you first to market across the Greater
+          Toronto Area.
         </p>
 
         <div className={styles.actions}>
@@ -36,7 +37,7 @@ export default function Hero() {
 
         <div className={styles.trust}>
           <span className={styles.dot} aria-hidden="true" />
-          Serving the Greater Toronto Area · Next-day delivery
+          Serving the Greater Toronto Area · 24-Hour Turnaround
         </div>
       </div>
 
