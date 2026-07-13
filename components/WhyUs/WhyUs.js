@@ -10,18 +10,18 @@ const POINTS = [
     desc: 'Correctly sized, colour-corrected, and formatted for every major listing platform.',
   },
   {
-    title: 'Licensed drone pilot',
-    desc: 'Transport Canada–certified aerial work, fully insured for residential and commercial shoots.',
+    title: 'Drone Photos and Videos',
+    desc: 'Transport Canada certified aerial work, fully insured for residential and commercial shoots.',
   },
   {
     title: 'One team, one invoice',
-    desc: 'Photo, video, drone, and 3D from a single crew — no juggling multiple vendors.',
+    desc: 'Photo, video, drone, and 3D from a single crew, so you never juggle multiple vendors.',
   },
 ];
 
 const STATS = [
-  { value: '200+', label: 'Listings shot' },
-  { value: '48h', label: 'Avg. turnaround' },
+  { value: '100%', label: 'MLS-ready files' },
+  { value: '24h', label: 'Avg. turnaround' },
   { value: 'GTA', label: 'Coverage area' },
   { value: '4K', label: 'Video & drone' },
 ];

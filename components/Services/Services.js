@@ -74,8 +74,8 @@ export default function Services() {
         <span className="eyebrow">What We Do</span>
         <h2 className="sectionTitle">Everything your listing needs to shine</h2>
         <p className="sectionLead">
-          One team for the full media package — book a single shoot and receive a polished, market-ready set of video and
-          photography.
+          One team for the full media package. Book a single shoot and receive a polished, market-ready set of photos and
+          video.
         </p>
 
         <div className={styles.grid}>

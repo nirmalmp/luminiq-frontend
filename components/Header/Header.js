@@ -1,14 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import Logo from '../Logo/Logo';
 import styles from './Header.module.css';
 
 const NAV = [
-  { label: 'Services', href: '#services' },
-  { label: 'Work', href: '#work' },
-  { label: 'Why Us', href: '#why' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Services', href: '/#services' },
+  { label: 'Work', href: '/#work' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'Why Us', href: '/#why' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 export default function Header() {
@@ -25,19 +27,19 @@ export default function Header() {
   return (
     <header className={`${styles.header} ${scrolled ? styles.solid : ''}`}>
       <div className={`container ${styles.inner}`}>
-        <a href="#top" className={styles.brand} onClick={() => setOpen(false)}>
+        <Link href="/" className={styles.brand} onClick={() => setOpen(false)}>
           <Logo />
-        </a>
+        </Link>
 
         <nav className={`${styles.nav} ${open ? styles.navOpen : ''}`}>
           {NAV.map((item) => (
-            <a key={item.href} href={item.href} className={styles.link} onClick={() => setOpen(false)}>
+            <Link key={item.href} href={item.href} className={styles.link} onClick={() => setOpen(false)}>
               {item.label}
-            </a>
+            </Link>
           ))}
-          <a href="#contact" className={`btn btnPrimary ${styles.cta}`} onClick={() => setOpen(false)}>
+          <Link href="/#contact" className={`btn btnPrimary ${styles.cta}`} onClick={() => setOpen(false)}>
             Get a Quote
-          </a>
+          </Link>
         </nav>
 
         <button

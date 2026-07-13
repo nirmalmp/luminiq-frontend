@@ -22,7 +22,7 @@ const allura = Allura({
   display: 'swap',
 });
 
-const SITE_TITLE = 'Luminiq Media — Real Estate Photography & Videography | GTA';
+const SITE_TITLE = 'Luminiq Media | Real Estate Photography & Videography';
 const SITE_DESC =
   'Cinematic real estate photography and video for the Greater Toronto Area. Property tours, HDR photography, aerial drone, and 3D virtual tours that help listings sell faster.';
 

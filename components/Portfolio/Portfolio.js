@@ -1,12 +1,12 @@
 import styles from './Portfolio.module.css';
 
 const TILES = [
-  { label: 'Luxury Condo — Downtown Toronto', tag: 'Video Tour', span: 'wide' },
-  { label: 'Detached Home — Oakville', tag: 'Photography' },
-  { label: 'Penthouse — Yorkville', tag: 'Twilight' },
-  { label: 'Estate — King City', tag: 'Aerial' },
-  { label: 'Modern Townhome — Mississauga', tag: 'Social Reel' },
-  { label: 'Waterfront — Burlington', tag: '3D Tour', span: 'wide' },
+  { label: 'Luxury Condo, Downtown Toronto', tag: 'Video Tour', span: 'wide' },
+  { label: 'Detached Home, Oakville', tag: 'Photography' },
+  { label: 'Penthouse, Yorkville', tag: 'Twilight' },
+  { label: 'Estate, King City', tag: 'Aerial' },
+  { label: 'Modern Townhome, Mississauga', tag: 'Social Reel' },
+  { label: 'Waterfront, Burlington', tag: '3D Tour', span: 'wide' },
 ];
 
 export default function Portfolio() {
@@ -17,14 +17,14 @@ export default function Portfolio() {
         <h2 className="sectionTitle">A look at recent listings</h2>
         <p className="sectionLead">A snapshot of the homes we&apos;ve brought to life.</p>
 
-        {/* Featured video — drop a YouTube/Vimeo iframe into the slot below */}
+        {/* Featured video: drop a YouTube/Vimeo iframe into the slot below */}
         <div className={styles.feature}>
           <div className={styles.videoSlot}>
             {/*
               Example embed (uncomment + set the ID):
               <iframe
                 src="https://www.youtube.com/embed/VIDEO_ID"
-                title="Luminiq Media — Featured Property Tour"
+                title="Luminiq Media Featured Property Tour"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
@@ -34,7 +34,7 @@ export default function Portfolio() {
                 <path d="M8 5v14l11-7z" />
               </svg>
             </button>
-            <span className={styles.featureLabel}>Featured Property Reel — 60s</span>
+            <span className={styles.featureLabel}>Featured Property Reel (60s)</span>
           </div>
         </div>
 

@@ -21,9 +21,9 @@ export default function Hero() {
           Cinematic real estate media that <span className={styles.accent}>sells the space</span>
         </h1>
         <p className={styles.lead}>
-          From first frame to final cut, Luminiq Media turns listings into stories buyers stop for — cinematic property
+          From first frame to final cut, Luminiq Media turns listings into stories buyers stop for. Cinematic property
           tours and magazine-grade photography, delivered fast enough to keep you first to market across the Greater
-          Toronto Area.
+          Toronto Area and beyond.
         </p>
 
         <div className={styles.actions}>

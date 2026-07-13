@@ -1,11 +1,13 @@
+import Link from 'next/link';
 import Logo from '../Logo/Logo';
 import styles from './Footer.module.css';
 
 const LINKS = [
-  { label: 'Services', href: '#services' },
-  { label: 'Work', href: '#work' },
-  { label: 'Why Us', href: '#why' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Services', href: '/#services' },
+  { label: 'Work', href: '/#work' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'Why Us', href: '/#why' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 export default function Footer() {
@@ -19,9 +21,9 @@ export default function Footer() {
 
         <nav className={styles.links}>
           {LINKS.map((l) => (
-            <a key={l.href} href={l.href}>
+            <Link key={l.href} href={l.href}>
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -35,7 +37,7 @@ export default function Footer() {
       </div>
 
       <div className={`container ${styles.bottom}`}>
-        <span>© 2026 Luminiq Media. All rights reserved.</span>
+        <span>© Luminiq Media. All rights reserved.</span>
         <span>Toronto</span>
       </div>
     </footer>

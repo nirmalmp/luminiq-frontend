@@ -5,7 +5,7 @@ import styles from './Logo.module.css';
 /**
  * Brand lockup: the camera mark extracted from the business card + "Luminiq
  * Media" wordmark. The mark is a STATIC IMPORT (camera.png) so Next emits a
- * basePath-prefixed, hashed URL — a plain "/logo.png" src does not get the
+ * basePath-prefixed, hashed URL. A plain "/logo.png" src does not get the
  * basePath under static export and 404s on the GitHub Pages subpath.
  */
 export default function Logo({ compact = false }) {

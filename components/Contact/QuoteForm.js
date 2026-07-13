@@ -43,7 +43,7 @@ export default function QuoteForm() {
             <path d="M20 6L9 17l-5-5" />
           </svg>
         </span>
-        <h3>Thanks — request received!</h3>
+        <h3>Thanks, request received!</h3>
         <p>We&apos;ll be in touch within 24 hours to confirm availability and pricing.</p>
         <button type="button" className="btn btnGhost" onClick={() => setStatus('idle')}>
           Send another request
