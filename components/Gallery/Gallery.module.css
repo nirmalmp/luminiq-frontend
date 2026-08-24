@@ -1,0 +1,373 @@
+/* ---- Property intro ---- */
+.intro {
+  padding-top: calc(var(--header-h) + clamp(48px, 7vw, 96px));
+  padding-bottom: clamp(28px, 4vw, 44px);
+}
+
+.title {
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  margin-top: 10px;
+}
+
+.summary {
+  max-width: 62ch;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.tagPill {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--navy-900);
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+/* ---- Hero ---- */
+.hero {
+  position: relative;
+  /* width must be explicit: with aspect-ratio alone, max-height shrinks the box
+     on BOTH axes and the hero ends up narrower than the container. Pinning the
+     width leaves max-height clamping height only, and object-fit crops. */
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  max-height: 74vh;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.heroImage {
+  object-fit: cover;
+}
+
+/* ---- Grid ---- */
+.gallery {
+  padding-block: clamp(40px, 6vw, 72px);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  list-style: none;
+}
+
+.tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line-soft);
+  background: var(--navy-850);
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.tileImage {
+  object-fit: cover;
+}
+
+.tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 45%, rgba(0, 0, 0, 0.6));
+  pointer-events: none;
+}
+
+.tile:hover,
+.tile:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--line);
+}
+
+.tile:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 3px;
+}
+
+.tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--navy-900);
+  background: var(--gold-light);
+  padding: 5px 10px;
+  border-radius: 999px;
+}
+
+.expand {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(10, 20, 40, 0.6);
+  border: 1px solid var(--line);
+  color: var(--gold-light);
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+
+.tile:hover .expand,
+.tile:focus-visible .expand {
+  opacity: 1;
+}
+
+.expand svg {
+  width: 20px;
+  height: 20px;
+}
+
+.caption {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 16px;
+  z-index: 2;
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+  color: var(--text);
+}
+
+/* ---- Closing CTA ---- */
+.cta {
+  padding-bottom: clamp(64px, 9vw, 120px);
+  text-align: center;
+}
+
+.ctaButton {
+  margin-top: 24px;
+}
+
+/* ---- Lightbox ---- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  /* Must beat the fixed Header, which is also z-index 100 -- at equal values the
+     overlay would only win on DOM order, which is too fragile to rely on. */
+  z-index: 200;
+  background: rgba(4, 9, 20, 0.94);
+  display: grid;
+  place-items: center;
+  padding: clamp(12px, 3vw, 40px);
+  animation: fade 0.18s ease;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.dialog {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(8px, 2vw, 20px);
+}
+
+.dialog:focus {
+  outline: none;
+}
+
+.stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+}
+
+.stageImage {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 190px);
+  border-radius: var(--radius-sm);
+}
+
+/* Neighbours are fetched but never shown. */
+.preload {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.arrow,
+.close {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(13, 27, 54, 0.85);
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.arrow {
+  width: 52px;
+  height: 52px;
+}
+
+.arrow svg {
+  width: 24px;
+  height: 24px;
+}
+
+.arrow:hover,
+.close:hover {
+  background: var(--gold);
+  color: var(--navy-900);
+}
+
+.arrow:focus-visible,
+.close:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 3px;
+}
+
+.close {
+  position: absolute;
+  top: -8px;
+  right: -4px;
+  width: 44px;
+  height: 44px;
+  z-index: 3;
+}
+
+.close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.meta {
+  grid-column: 2;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.metaCaption {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+}
+
+.counter {
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .dialog {
+    grid-template-columns: 1fr;
+  }
+
+  .stage {
+    grid-column: 1;
+  }
+
+  .stageImage {
+    max-height: calc(100vh - 210px);
+  }
+
+  /* Arrows drop below the photo, side by side, so the image gets full width. */
+  .arrow {
+    position: absolute;
+    bottom: -66px;
+    width: 46px;
+    height: 46px;
+  }
+
+  .prev {
+    left: calc(50% - 62px);
+  }
+
+  .next {
+    right: calc(50% - 62px);
+  }
+
+  .close {
+    top: -10px;
+    right: 0;
+  }
+
+  .meta {
+    grid-column: 1;
+    margin-top: 14px;
+  }
+}
+
+@media (max-width: 560px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile,
+  .arrow,
+  .close,
+  .expand {
+    transition: none;
+  }
+
+  .tile:hover,
+  .tile:focus-visible {
+    transform: none;
+  }
+
+  .overlay {
+    animation: none;
+  }
+}

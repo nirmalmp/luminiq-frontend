@@ -19,6 +19,18 @@
   font-size: 1.05rem;
 }
 
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ---- Tabs ---- */
 .tabs {
   display: flex;
@@ -74,111 +86,184 @@
   display: none;
 }
 
-/* ---- Individual service tables ---- */
-.tables {
+/* ---- Package comparison matrix ---- */
+.matrixWrap {
+  margin-top: 40px;
+  overflow-x: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--line-soft);
+  /* Flat, not a gradient: the sticky first column paints its own opaque
+     background and any gradient would visibly mismatch it while scrolling. */
+  background: var(--navy-850);
+}
+
+.matrixWrap:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.matrix {
+  width: 100%;
+  /* Forces the horizontal scroll rather than crushing five columns. */
+  min-width: 760px;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.matrix thead th {
+  padding: 26px 18px 20px;
+  vertical-align: bottom;
+  border-bottom: 1px solid var(--line);
+}
+
+.matrixName {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.matrixPrice {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 2.4vw, 2.1rem);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--gold-light);
+}
+
+/*
+ * The card badge hangs outside its box; inside a scroll container that would be
+ * clipped, so in here it sits in normal flow.
+ */
+.matrix .badge {
+  position: static;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+/* Feature column: pinned so labels stay readable while the packages scroll. */
+.matrixCorner {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--navy-850);
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text);
+  padding: 15px 22px;
+  white-space: nowrap;
+  border-right: 1px solid var(--line-soft);
+}
+
+.matrix tbody td {
+  padding: 15px 18px;
+}
+
+.matrix tbody tr {
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.bestForRow td {
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.bestForRow th,
+.bestForRow td {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+/* Runs the recommended column top to bottom so the eye tracks it. */
+.colPopular {
+  background: rgba(201, 162, 39, 0.07);
+}
+
+.matrix thead th.colPopular {
+  background: rgba(201, 162, 39, 0.12);
+}
+
+.matrixCheck {
+  display: block;
+  margin: 0 auto;
+  width: 18px;
+  height: 18px;
+  color: var(--gold-light);
+}
+
+.no {
+  color: var(--muted);
+  opacity: 0.5;
+}
+
+.matrix tfoot td {
+  padding: 24px 14px;
+  border-top: 1px solid var(--line);
+}
+
+.matrixCta {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+/* ---- Add-ons ---- */
+.addonGrid {
+  list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 14px;
   margin-top: 40px;
 }
 
-.tableCard {
-  padding: 26px;
-  border-radius: var(--radius);
+.addonItem {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 20px 22px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--line-soft);
   background: linear-gradient(160deg, var(--navy-800), var(--navy-850));
+  font-size: 0.98rem;
+  color: var(--text);
   transition:
     border-color 0.2s ease,
     transform 0.2s ease;
 }
 
-.tableCard:hover {
+.addonItem:hover {
   border-color: var(--line);
-  transform: translateY(-3px);
-}
-
-.tableTitle {
-  font-size: 1.3rem;
-  color: var(--text);
-  margin-bottom: 16px;
-}
-
-.tableWrap {
-  overflow-x: auto;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.95rem;
-}
-
-.table th {
-  text-align: left;
-  font-family: var(--font-sans);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--gold-light);
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--line);
-  white-space: nowrap;
-}
-
-.table th:last-child,
-.table td:last-child {
-  text-align: right;
-}
-
-.table td {
-  padding-block: 12px;
-  border-bottom: 1px solid var(--line-soft);
-  color: var(--muted);
-}
-
-.table tbody tr:last-child td {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.price {
-  color: var(--text);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.addonCard {
-  margin-top: 22px;
-}
-
-.addonCard:hover {
-  transform: none;
+  transform: translateY(-2px);
 }
 
 .addonNote {
+  margin-top: 28px;
   color: var(--muted);
   font-size: 0.92rem;
-  margin-top: -6px;
-  margin-bottom: 18px;
   max-width: 70ch;
 }
 
-/* ---- Cards: packages, memberships, teams ---- */
-.packages,
-.memberships,
-.teams {
+.addonNote a {
+  color: var(--gold-light);
+  border-bottom: 1px solid var(--line);
+}
+
+.addonNote a:hover {
+  border-bottom-color: var(--gold);
+}
+
+/* ---- Cards: memberships ---- */
+.memberships {
   display: grid;
   gap: 22px;
   margin-top: 40px;
-}
-
-.packages {
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-}
-
-.memberships,
-.teams {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
@@ -230,7 +315,7 @@
   font-weight: 600;
   line-height: 1.1;
   color: var(--gold-light);
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .period {
@@ -241,12 +326,6 @@
   margin-left: 4px;
 }
 
-.cardBlurb {
-  color: var(--muted);
-  font-size: 0.93rem;
-  margin-bottom: 20px;
-}
-
 .groupHead {
   font-family: var(--font-sans);
   font-size: 0.7rem;
@@ -254,7 +333,7 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--gold-light);
-  margin-top: 20px;
+  margin-top: 22px;
   margin-bottom: 12px;
 }
 
@@ -288,64 +367,13 @@
   font-size: 1rem;
   font-weight: 600;
   color: var(--text);
-  padding-bottom: 4px;
 }
 
-.plainList {
-  list-style: none;
-  display: grid;
-  gap: 8px;
+.creditNote {
   padding-left: 28px;
-}
-
-.plainList li {
-  position: relative;
-  font-size: 0.9rem;
+  margin-top: 4px;
+  font-size: 0.86rem;
   color: var(--muted);
-}
-
-.plainList li::before {
-  content: '';
-  position: absolute;
-  left: -14px;
-  top: 9px;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--gold);
-}
-
-.addonList {
-  list-style: none;
-  display: grid;
-  gap: 10px;
-}
-
-.addonList li {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  font-size: 0.92rem;
-  color: var(--muted);
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--line-soft);
-}
-
-.addonList li:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.savings {
-  margin-top: 18px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  align-self: flex-start;
-  background: var(--gold-soft);
-  border: 1px solid var(--line);
-  color: var(--gold-light);
-  font-size: 0.82rem;
-  font-weight: 600;
 }
 
 .cardCta {
@@ -354,10 +382,34 @@
   justify-content: center;
 }
 
-.features + .cardCta,
-.savings + .cardCta,
-.addonList + .cardCta {
+.features + .cardCta {
   margin-top: 26px;
+}
+
+/* ---- Teams & brokerages ---- */
+.teamCard {
+  margin-top: 40px;
+  padding: clamp(32px, 5vw, 56px);
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: linear-gradient(135deg, var(--navy-700), var(--navy-800));
+  text-align: center;
+}
+
+.teamTitle {
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  margin-bottom: 14px;
+}
+
+.teamLead {
+  color: var(--muted);
+  font-size: 1.02rem;
+  max-width: 64ch;
+  margin: 0 auto 28px;
+}
+
+.teamCta {
+  white-space: normal;
 }
 
 /* ---- Closing CTA ---- */
@@ -385,8 +437,13 @@
     left: 20px;
   }
 
-  .card,
-  .tableCard {
+  .card {
     padding: 26px 20px;
+  }
+
+  .matrixCorner {
+    padding: 14px 16px;
+    white-space: normal;
+    min-width: 150px;
   }
 }

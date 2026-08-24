@@ -7,13 +7,17 @@ import WhyUs from '@/components/WhyUs/WhyUs';
 import Testimonials from '@/components/Testimonials/Testimonials';
 import Contact from '@/components/Contact/Contact';
 import Footer from '@/components/Footer/Footer';
+import { getProperty, pickPhotos } from '@/lib/properties';
 
 export default function Home() {
+  const featured = getProperty('timber-frame-estate');
+  const [heroPhoto] = pickPhotos(featured, [featured.heroPhoto]);
+
   return (
     <>
       <Header />
       <main>
-        <Hero />
+        <Hero photo={heroPhoto} />
         <TrustedBy />
         <Services />
         <Portfolio />

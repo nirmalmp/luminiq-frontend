@@ -8,6 +8,7 @@ import styles from './Header.module.css';
 const NAV = [
   { label: 'Services', href: '/#services' },
   { label: 'Work', href: '/#work' },
+  { label: 'Portfolio', href: '/portfolio/timber-frame-estate' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Why Us', href: '/#why' },
   { label: 'Contact', href: '/#contact' },

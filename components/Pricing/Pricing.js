@@ -4,328 +4,206 @@ import { useRef, useState } from 'react';
 import Link from 'next/link';
 import styles from './Pricing.module.css';
 
-const INDIVIDUAL = [
-  {
-    name: 'Photography',
-    head: 'Property Size',
-    rows: [
-      ['Condo / Apartment', '$169'],
-      ['Under 2,000 sqft', '$219'],
-      ['2,000 to 3,500 sqft', '$269'],
-      ['3,500 to 5,000 sqft', '$329'],
-      ['5,000+ sqft', 'Custom Quote'],
-    ],
-  },
-  {
-    name: 'Video Services',
-    head: 'Service',
-    rows: [
-      ['Cinematic Listing Video', '$349'],
-      ['Social Media Reel (Vertical)', '$199'],
-      ['Agent Walkthrough Video', '$299'],
-      ['Premium Agent Branding Video', '$499'],
-      ['Luxury Property Story Film', 'Starting at $899'],
-    ],
-  },
-  {
-    name: 'Drone',
-    head: 'Service',
-    rows: [
-      ['Drone Photos', '$129'],
-      ['Drone Video', '$179'],
-      ['Drone Photos + Video', '$249'],
-    ],
-  },
-  {
-    name: 'Floor Plans',
-    head: 'Service',
-    rows: [
-      ['2D Floor Plan', '$99'],
-      ['3D Floor Plan', '$179'],
-    ],
-  },
-  {
-    name: 'Virtual Tours',
-    head: 'Service',
-    rows: [
-      ['360° Tour', '$199'],
-      ['Matterport Tour', '$299'],
-    ],
-  },
-  {
-    name: 'Virtual Services',
-    head: 'Service',
-    rows: [
-      ['Virtual Staging', '$45/image'],
-      ['Virtual Twilight', '$45/image'],
-      ['AI Virtual Renovation', '$89/image'],
-    ],
-  },
-  {
-    name: 'Marketing',
-    head: 'Service',
-    rows: [
-      ['Property Website', '$99'],
-      ['Feature Sheets', '$59'],
-      ['Neighborhood Lifestyle Reel', '$249'],
-      ['Same-Day Delivery', '$149'],
-    ],
-  },
+/*
+ * Packages are named by market intent rather than by what is technically in the
+ * box, so an agent picks by the listing in front of them. The feature matrix
+ * below carries the detail.
+ */
+const PACKAGES = [
+  { id: 'launch', name: 'Launch', price: '$399', bestFor: 'Condos & Leases' },
+  { id: 'elevate', name: 'Elevate', price: '$699', bestFor: 'Standard Resale', popular: true },
+  { id: 'showcase', name: 'Showcase', price: '$999', bestFor: 'High-End Homes' },
+  { id: 'signature', name: 'Signature', price: '$1,499', bestFor: 'Luxury Estates' },
 ];
 
-const PACKAGES = [
-  {
-    name: 'Essential',
-    price: '$399',
-    blurb: 'Perfect for condos and entry-level listings.',
-    features: ['HDR Photography', 'Drone Photography', '2D Floor Plan'],
-  },
-  {
-    name: 'Professional',
-    price: '$699',
-    blurb: 'Everything agents need to market a listing.',
-    popular: true,
-    features: [
-      'HDR Photography',
-      'Drone Photos',
-      'Drone Video',
-      'Floor Plan',
-      'Social Media Reel',
-      'Property Website',
-    ],
-    savings: 'Savings: $190',
-  },
-  {
-    name: 'Premium',
-    price: '$999',
-    blurb: 'Designed for luxury listings.',
-    features: [
-      'HDR Photography',
-      'Drone Photos',
-      'Drone Video',
-      'Cinematic Video',
-      'Floor Plan',
-      'Social Reel',
-      'Virtual Twilight',
-      'Property Website',
-    ],
-    savings: 'Savings: $350',
-  },
-  {
-    name: 'Signature Luxury',
-    price: '$1,499',
-    blurb: 'The complete marketing package.',
-    features: [
-      'HDR Photography',
-      'Cinematic Video',
-      'Drone Photos',
-      'Drone Video',
-      'Agent Walkthrough Video',
-      'Matterport Tour',
-      'Social Reel',
-      'Property Website',
-      'Floor Plan',
-      'Virtual Twilight',
-      '3 Virtual Staging Images',
-      'Priority Delivery',
-    ],
-    savings: 'Savings: $650+',
-  },
+/* [label, included in each package, in PACKAGES order]. */
+const PACKAGE_FEATURES = [
+  ['HDR Photos', [true, true, true, true]],
+  ['2D Floor Plan', [true, true, true, true]],
+  ['Aerial Drone Stills', [true, true, true, true]],
+  ['Aerial Drone Video', [false, true, true, true]],
+  ['Social Media Reel', [false, true, true, true]],
+  ['Property Website', [false, true, true, true]],
+  ['Cinematic Video', [false, false, true, true]],
+  ['Virtual Twilight', [false, false, true, true]],
+  ['Agent Walkthrough Video', [false, false, false, true]],
+  ['3D Matterport Tour', [false, false, false, true]],
+  ['3 Virtual Staging Edits', [false, false, false, true]],
 ];
+
+/*
+ * Deliberately unpriced. Add-on pricing is configured in the booking flow once
+ * a package is chosen, which keeps this page to four numbers instead of thirty.
+ */
+const ADDONS = [
+  '3D Matterport Tours',
+  'Virtual Staging & AI Decluttering',
+  'Day-to-Dusk Twilight Conversions',
+  'Neighborhood Lifestyle Reels',
+  'Same-Day Express Media Delivery',
+];
+
+/*
+ * Memberships sell Listing Credits rather than all-inclusive months, so heavy
+ * video and editing work stays an add-on instead of eating the margin.
+ */
+const CREDIT_INCLUDES = 'Photos, Drone Stills & 2D Floor Plan per listing';
 
 const MEMBERSHIPS = [
   {
-    name: 'Creator Membership',
+    name: 'Creator Plan',
     price: '$1,399',
     period: '/month',
     credits: '4 Listing Credits',
-    creditIncludes: ['HDR Photography', 'Drone Photos', '2D Floor Plan'],
-    benefits: ['Priority Booking', '10% Off All Add-ons', 'Online Gallery'],
+    benefits: ['10% Off All Media Add-Ons', 'Priority Booking Access'],
   },
   {
-    name: 'Growth Membership',
+    name: 'Growth Plan',
     price: '$2,699',
     period: '/month',
     popular: true,
     credits: '8 Listing Credits',
-    benefits: ['Priority Booking', '15% Off Add-ons', 'Rush Booking Access', 'Dedicated Client Portal'],
+    benefits: ['15% Off All Media Add-Ons', 'Rush Delivery & Booking Priority', 'Dedicated Client Portal'],
   },
   {
-    name: 'Elite Membership',
-    price: '$4,999',
+    name: 'Elite Plan',
+    price: '$4,899',
     period: '/month',
     credits: '15 Listing Credits',
-    benefits: [
-      '20% Off Add-ons',
-      'Same-Day Booking Priority',
-      'Dedicated Photographer',
-      'Dedicated Editor',
-      'White-Glove Support',
-    ],
-  },
-];
-
-const MEMBER_ADDONS = [
-  ['Cinematic Video', '$199'],
-  ['Social Reel', '$99'],
-  ['Agent Walkthrough', '$199'],
-  ['Matterport Tour', '$199'],
-  ['Virtual Staging', '$35/image'],
-  ['Virtual Twilight', '$30/image'],
-  ['Property Website', 'Included with Professional Package or $69 standalone'],
-  ['Same-Day Delivery', '$99'],
-];
-
-const TEAM_PLANS = [
-  {
-    name: 'Team 20',
-    price: '$7,500',
-    period: '/month',
-    volume: 'Up to 20 Listings',
-    groups: [
-      {
-        head: 'Each Listing Includes',
-        items: ['HDR Photography', 'Drone Photography', '2D Floor Plan'],
-      },
-      {
-        head: 'Included Benefits',
-        items: [
-          'Dedicated Photographer',
-          'Dedicated Editor',
-          'Next-Day Delivery',
-          'Priority Scheduling',
-          'Team Dashboard',
-        ],
-      },
-    ],
-    addons: [
-      ['Cinematic Video', '$199'],
-      ['Social Reel', '$99'],
-      ['Agent Walkthrough', '$199'],
-      ['Matterport', '$199'],
-    ],
-  },
-  {
-    name: 'Team 40',
-    price: '$13,500',
-    period: '/month',
-    volume: 'Up to 40 Listings',
-    groups: [
-      {
-        head: 'Everything in Team 20, plus',
-        items: [
-          'Same-Day Delivery Available',
-          'Weekend Priority',
-          'Marketing Consultation',
-          'Custom Booking Portal',
-          'Dedicated Account Manager',
-        ],
-      },
-    ],
-  },
-  {
-    name: 'Enterprise Brokerage',
-    price: 'Custom Pricing',
-    volume: 'For brokerages with 50+ listings per month',
-    groups: [
-      {
-        head: 'Includes',
-        items: [
-          'Dedicated production team',
-          'Multi-city coverage',
-          'Priority scheduling',
-          'Custom branding',
-          'API/CRM integration (future-ready)',
-          'White-label delivery options',
-        ],
-      },
-    ],
+    benefits: ['20% Off All Media Add-Ons', 'Guaranteed Next-Day Delivery', 'Dedicated Photographer & Lead Editor'],
   },
 ];
 
 const TABS = [
-  { id: 'individual', label: 'Individual Services' },
   { id: 'packages', label: 'Listing Packages' },
+  { id: 'addons', label: 'Add-Ons' },
   { id: 'memberships', label: 'Memberships' },
   { id: 'teams', label: 'Teams & Brokerages' },
 ];
 
-function Check() {
+function Check({ className }) {
   return (
-    <svg className={styles.check} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg
+      className={className || styles.check}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <path d="M20 6L9 17l-5-5" />
     </svg>
-  );
-}
-
-function PriceTable({ head, rows }) {
-  return (
-    <div className={styles.tableWrap}>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th scope="col">{head}</th>
-            <th scope="col">Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map(([label, price]) => (
-            <tr key={label}>
-              <td>{label}</td>
-              <td className={styles.price}>{price}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function IndividualPanel() {
-  return (
-    <>
-      <p className="sectionLead">Book exactly what the listing needs, priced per service.</p>
-      <div className={styles.tables}>
-        {INDIVIDUAL.map((group) => (
-          <div key={group.name} className={styles.tableCard}>
-            <h3 className={styles.tableTitle}>{group.name}</h3>
-            <PriceTable head={group.head} rows={group.rows} />
-          </div>
-        ))}
-      </div>
-    </>
   );
 }
 
 function PackagesPanel() {
   return (
     <>
-      <p className="sectionLead">Bundle a full listing shoot and save against individual service pricing.</p>
-      <div className={styles.packages}>
-        {PACKAGES.map((p) => (
-          <article key={p.name} className={`${styles.card} ${p.popular ? styles.cardPopular : ''}`}>
-            {p.popular && <span className={styles.badge}>Most Popular</span>}
-            <h3 className={styles.cardTitle}>{p.name}</h3>
-            <p className={styles.cardPrice}>{p.price}</p>
-            <p className={styles.cardBlurb}>{p.blurb}</p>
+      <p className="sectionLead">
+        Four ways to take a listing to market. Pick by the property, not by the spec sheet.
+      </p>
 
-            <ul className={styles.features}>
-              {p.features.map((f) => (
-                <li key={f}>
-                  <Check />
-                  {f}
-                </li>
+      {/* Scrolls sideways on narrow screens; the feature column stays pinned. */}
+      <div className={styles.matrixWrap} tabIndex={0} role="group" aria-label="Package comparison, scrollable">
+        <table className={styles.matrix}>
+          <caption className={styles.srOnly}>Listing package feature comparison</caption>
+          <thead>
+            <tr>
+              <th scope="col" className={styles.matrixCorner}>
+                Feature
+              </th>
+              {PACKAGES.map((p) => (
+                <th key={p.id} scope="col" className={p.popular ? styles.colPopular : undefined}>
+                  {p.popular && <span className={styles.badge}>Most Popular</span>}
+                  <span className={styles.matrixName}>{p.name}</span>
+                  <span className={styles.matrixPrice}>{p.price}</span>
+                </th>
               ))}
-            </ul>
+            </tr>
+          </thead>
 
-            {p.savings && <p className={styles.savings}>{p.savings}</p>}
+          <tbody>
+            <tr className={styles.bestForRow}>
+              <th scope="row" className={styles.matrixCorner}>
+                Best For
+              </th>
+              {PACKAGES.map((p) => (
+                <td key={p.id} className={p.popular ? styles.colPopular : undefined}>
+                  {p.bestFor}
+                </td>
+              ))}
+            </tr>
 
-            <Link href="/#contact" className={`btn ${p.popular ? 'btnPrimary' : 'btnGhost'} ${styles.cardCta}`}>
-              Book {p.name}
-            </Link>
-          </article>
-        ))}
+            {PACKAGE_FEATURES.map(([label, flags]) => (
+              <tr key={label}>
+                <th scope="row" className={styles.matrixCorner}>
+                  {label}
+                </th>
+                {flags.map((included, i) => (
+                  <td key={PACKAGES[i].id} className={PACKAGES[i].popular ? styles.colPopular : undefined}>
+                    {included ? (
+                      <>
+                        <Check className={styles.matrixCheck} />
+                        <span className={styles.srOnly}>Included</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className={styles.no} aria-hidden="true">
+                          —
+                        </span>
+                        <span className={styles.srOnly}>Not included</span>
+                      </>
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+
+          <tfoot>
+            <tr>
+              <td className={styles.matrixCorner} />
+              {PACKAGES.map((p) => (
+                <td key={p.id} className={p.popular ? styles.colPopular : undefined}>
+                  <Link
+                    href="/#contact"
+                    className={`btn ${p.popular ? 'btnPrimary' : 'btnGhost'} ${styles.matrixCta}`}
+                  >
+                    Book {p.name}
+                  </Link>
+                </td>
+              ))}
+            </tr>
+          </tfoot>
+        </table>
       </div>
+    </>
+  );
+}
+
+function AddonsPanel() {
+  return (
+    <>
+      <p className="sectionLead">
+        Every package can be extended. Add-ons are priced and configured during checkout once you&apos;ve chosen a
+        package, so you only ever see the options that apply to your listing.
+      </p>
+
+      <ul className={styles.addonGrid}>
+        {ADDONS.map((addon) => (
+          <li key={addon} className={styles.addonItem}>
+            <Check />
+            {addon}
+          </li>
+        ))}
+      </ul>
+
+      <p className={styles.addonNote}>
+        Need customised media assets or a single-service booking? Select your package and customise add-ons at
+        checkout, or <Link href="/#contact">talk to us</Link> and we&apos;ll build it around the property.
+      </p>
     </>
   );
 }
@@ -334,8 +212,8 @@ function MembershipsPanel() {
   return (
     <>
       <p className="sectionLead">
-        Perfect for realtors who list multiple properties each month. Unlike traditional subscriptions, our memberships
-        include Listing Credits. Use them anytime during the month.
+        For agents listing consistently every month. Memberships run on Listing Credits — use them whenever you need
+        them, and add premium media at member rates.
       </p>
 
       <div className={styles.memberships}>
@@ -352,17 +230,7 @@ function MembershipsPanel() {
               <Check />
               {m.credits}
             </p>
-
-            {m.creditIncludes && (
-              <>
-                <p className={styles.groupHead}>Each Credit Includes</p>
-                <ul className={styles.plainList}>
-                  {m.creditIncludes.map((c) => (
-                    <li key={c}>{c}</li>
-                  ))}
-                </ul>
-              </>
-            )}
+            <p className={styles.creditNote}>{CREDIT_INCLUDES}</p>
 
             <p className={styles.groupHead}>Member Benefits</p>
             <ul className={styles.features}>
@@ -375,36 +243,10 @@ function MembershipsPanel() {
             </ul>
 
             <Link href="/#contact" className={`btn ${m.popular ? 'btnPrimary' : 'btnGhost'} ${styles.cardCta}`}>
-              Start {m.name.replace(' Membership', '')}
+              Start {m.name.replace(' Plan', '')}
             </Link>
           </article>
         ))}
-      </div>
-
-      <div className={`${styles.tableCard} ${styles.addonCard}`}>
-        <h3 className={styles.tableTitle}>Premium Add-ons (Members Only)</h3>
-        <p className={styles.addonNote}>
-          Premium services such as cinematic video, Matterport, and agent walkthroughs can be added at discounted member
-          pricing.
-        </p>
-        <div className={styles.tableWrap}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th scope="col">Service</th>
-                <th scope="col">Member Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {MEMBER_ADDONS.map(([label, price]) => (
-                <tr key={label}>
-                  <td>{label}</td>
-                  <td className={styles.price}>{price}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       </div>
     </>
   );
@@ -412,68 +254,28 @@ function MembershipsPanel() {
 
 function TeamsPanel() {
   return (
-    <>
-      <p className="sectionLead">
-        For high-performing teams and brokerages with consistent monthly listing volume.
+    <div className={styles.teamCard}>
+      <h3 className={styles.teamTitle}>High-Volume Teams &amp; Brokerages</h3>
+      <p className={styles.teamLead}>
+        Producing 20+ listings a month? We build custom retainer agreements with dedicated production teams,
+        white-label marketing delivery, and custom CRM integrations.
       </p>
-
-      <div className={styles.teams}>
-        {TEAM_PLANS.map((t) => (
-          <article key={t.name} className={styles.card}>
-            <h3 className={styles.cardTitle}>{t.name}</h3>
-            <p className={styles.cardPrice}>
-              {t.price}
-              {t.period && <span className={styles.period}>{t.period}</span>}
-            </p>
-            <p className={styles.cardBlurb}>{t.volume}</p>
-
-            {t.groups.map((g) => (
-              <div key={g.head}>
-                <p className={styles.groupHead}>{g.head}</p>
-                <ul className={styles.features}>
-                  {g.items.map((item) => (
-                    <li key={item}>
-                      <Check />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-
-            {t.addons && (
-              <>
-                <p className={styles.groupHead}>Member Add-on Pricing</p>
-                <ul className={styles.addonList}>
-                  {t.addons.map(([label, price]) => (
-                    <li key={label}>
-                      <span>{label}</span>
-                      <span className={styles.price}>{price}</span>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
-
-            <Link href="/#contact" className={`btn btnGhost ${styles.cardCta}`}>
-              Talk to Us
-            </Link>
-          </article>
-        ))}
-      </div>
-    </>
+      <Link href="/#contact" className={`btn btnPrimary ${styles.teamCta}`}>
+        Schedule a Brokerage Consultation
+      </Link>
+    </div>
   );
 }
 
 const PANELS = {
-  individual: IndividualPanel,
   packages: PackagesPanel,
+  addons: AddonsPanel,
   memberships: MembershipsPanel,
   teams: TeamsPanel,
 };
 
 export default function Pricing() {
-  const [active, setActive] = useState('individual');
+  const [active, setActive] = useState('packages');
   const tabRefs = useRef({});
 
   const onKeyDown = (e) => {
@@ -499,8 +301,8 @@ export default function Pricing() {
           <span className="eyebrow">Pricing</span>
           <h1 className={styles.title}>Straightforward pricing for every listing</h1>
           <p className={styles.lead}>
-            Book a single service, bundle a listing package, or put your whole month on a membership. Every price below
-            is what you pay, with no hidden production fees.
+            Choose the package that matches the property, or put a consistent month of listings on a membership. Every
+            price below is what you pay, with no hidden production fees.
           </p>
         </div>
       </section>

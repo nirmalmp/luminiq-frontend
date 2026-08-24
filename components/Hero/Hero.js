@@ -1,22 +1,32 @@
+import Image from 'next/image';
 import styles from './Hero.module.css';
 
-export default function Hero() {
+/**
+ * Landing hero: one photograph from the shoot behind the nav and the copy,
+ * held under a slow drift so it reads as a film still rather than wallpaper.
+ *
+ * No JS -- the motion is a CSS animation, so this stays a server component and
+ * the home page ships no extra client bundle for it.
+ */
+export default function Hero({ photo }) {
   return (
     <section className={styles.hero} id="top">
-      <div className={styles.glow} aria-hidden="true" />
-      <div className={styles.aperture} aria-hidden="true">
-        <svg viewBox="0 0 200 200">
-          <g transform="translate(100 100)">
-            <circle r="92" fill="none" stroke="currentColor" strokeWidth="1.5" />
-            {[0, 60, 120, 180, 240, 300].map((deg) => (
-              <path key={deg} d="M0 -78 L48 -16 L-10 -16 Z" transform={`rotate(${deg})`} fill="currentColor" />
-            ))}
-          </g>
-        </svg>
+      <div className={styles.frame} aria-hidden="true">
+        <Image
+          src={photo.full}
+          alt=""
+          fill
+          sizes="100vw"
+          priority
+          placeholder="blur"
+          className={styles.frameImage}
+        />
       </div>
 
+      <div className={styles.scrim} aria-hidden="true" />
+
       <div className={`container ${styles.inner}`}>
-        <span className="eyebrow">Photography · Videography</span>
+        <span className={`eyebrow ${styles.eyebrow}`}>Photography · Videography</span>
         <h1 className={styles.title}>
           Cinematic real estate media that <span className={styles.accent}>sells the space</span>
         </h1>
@@ -41,7 +51,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className={styles.scroll} aria-hidden="true">
+      <div className={styles.scrollHint} aria-hidden="true">
         <span>Scroll</span>
         <i />
       </div>
